@@ -9,6 +9,7 @@ Currently, two official plugins are available:
 
 web-приложение “bood” для оценки и корректирования рациона питания
 https://front.bood.pnpl.tech/ 
+
 Food-diary web-app
 
 ![a60e227eda44b2656c642a85106f49a4](https://github.com/MariaShalaginova/bood-front/assets/112416305/67a355a5-a736-4a0f-b783-fd53c057f8de)
