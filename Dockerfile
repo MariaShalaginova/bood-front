@@ -1,22 +1,15 @@
-# Используем Node.js в качестве базового образа
-FROM node:20
+FROM node:19-alpine as build-stage
 
-# Устанавливаем рабочую директорию внутри контейнера
+ARG VITE_API_URL
+
 WORKDIR /app
-
-# Копируем package.json и package-lock.json для установки зависимостей
 COPY package*.json ./
-
-# Устанавливаем зависимости
-RUN npm install
-
-# Копируем все файлы внутрь контейнера
+RUN npm ci
 COPY . .
+RUN npm run build
 
-
-
-# Открываем порт, который будет слушать приложение
+FROM nginx:stable-alpine as production-stage
+COPY --from=build-stage /app/dist /app
+COPY .ci/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
-
-# Команда для запуска приложения
-CMD ["npm", "run", "dev"]
+CMD ["nginx", "-g", "daemon off;"]
